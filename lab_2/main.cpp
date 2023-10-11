@@ -2,8 +2,8 @@
 #include <queue>
 #include <vector>
 #include <fstream>
-#include <sstream>
 #include <stack>
+#include <algorithm>
 
 #define N 100
 
@@ -15,7 +15,7 @@ int bfs_visited[N] = {0};
 int dist[N];
 int nodes, edges;
 int shortestPaths[N] = {0};
-float edgeFlux[N][N] = {0};  // New data structure for edge fluxes
+float edgeFlux[N][N] = {0};
 vector<vector<int>> shortestPathList[N];
 
 void printAdjlist();
@@ -32,12 +32,13 @@ int main(int argc, char *argv[]) {
     cout << endl;
 
     cout << "\nShortest paths with bfs: " << endl;
+    cout << "---------------------------" << endl;
 
     for (int i = 1; i <= nodes; ++i) {
         cout << "Shortest paths from 1 to " << i << ": " << shortestPaths[i] << endl;
         cout << "Paths: " << endl;
-        for (const vector<int> &path: shortestPathList[i]) {
-            for (int node: path) {
+        for (const vector<int> &path : shortestPathList[i]) {
+            for (int node : path) {
                 cout << node << " ";
             }
             cout << endl;
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
     cout << "\nEdge Fluxes: " << endl;
     for (int i = 1; i <= nodes; ++i) {
         for (int j = 1; j <= nodes; ++j) {
-            if( edgeFlux[i][j] != 0 ){
+            if (edgeFlux[i][j] != 0) {
                 cout << "Edge (" << i << " - " << j << "): " << edgeFlux[i][j] << endl;
             }
         }
@@ -117,14 +118,15 @@ void bfs2(int start) {
 }
 
 void trackShortestPaths(int start) {
-    stack<int> pathStack;
-    pathStack.push(start);
+    stack<vector<int>> pathStack;
     vector<int> currentPath;
+    currentPath.push_back(start);
+    pathStack.push(currentPath);
 
     while (!pathStack.empty()) {
-        int node = pathStack.top();
+        currentPath = pathStack.top();
         pathStack.pop();
-        currentPath.push_back(node);
+        int node = currentPath.back();
 
         if (node == 1) {
             vector<int> path(currentPath.rbegin(), currentPath.rend());
@@ -132,9 +134,12 @@ void trackShortestPaths(int start) {
         } else {
             for (int neighbor : adjList[node]) {
                 if (dist[neighbor] + 1 == dist[node]) {
-                    pathStack.push(neighbor);
+                    currentPath.push_back(neighbor);
+                    pathStack.push(currentPath);
+                    currentPath.pop_back();
                 }
             }
         }
     }
+    sort(shortestPathList[start].begin(), shortestPathList[start].end());
 }
