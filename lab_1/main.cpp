@@ -13,6 +13,7 @@ vector <int> adjList[N];
 int bfs_visited[N] = {0};
 int dist[N];
 int n,m;
+
 void bfs2(int start)
 {
     bfs_visited[start] = 1;
@@ -21,7 +22,7 @@ void bfs2(int start)
     while(!myQueue.empty())
     {
         int u = myQueue.front();
-        cout << u  << " ";
+        cout << u << " ";
         for (int i = 0; i < adjList[u].size(); ++i) {
             int v = adjList[u][i];
             if(bfs_visited[v] == 0)
@@ -38,6 +39,12 @@ void bfs2(int start)
 void read(char *filename)
 {
     ifstream fin(filename);
+
+    if( !fin){
+        cout << "Error when opening file!" << endl;
+        exit(-2);
+    }
+
     fin >> n >> m;
     for (int i = 1; i <= m; ++i) {
         int u,v;
@@ -47,7 +54,7 @@ void read(char *filename)
     }
 }
 
-void printadjlist()
+void printAdjlist()
 {
     for (int i = 1; i <= n; ++i) {
         cout << i << ": ";
@@ -59,13 +66,13 @@ void printadjlist()
 }
 
 int main(int argc, char *argv[]) {
-    read(argv[1]);
-    printadjlist();
-
+    read( argv[1] );
+    printAdjlist();
 
     cout << endl;
     bfs2(2);
     cout << endl;
+
     for (int i = 1; i <= n; ++i) {
         cout << i << " " << dist[i]<< endl;
     }
