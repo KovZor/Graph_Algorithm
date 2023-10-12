@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
         cout << endl;
     }
 
+    //printing the fluxes
     cout << "\nEdge Fluxes: " << endl;
     for (int i = 1; i <= nodes; ++i) {
         for (int j = 1; j <= nodes; ++j) {
