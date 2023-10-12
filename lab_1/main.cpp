@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 
+
 #define N 100
 
 using namespace std;
@@ -45,6 +46,7 @@ void read(char *filename)
         exit(-2);
     }
 
+    //read nodes, edges
     fin >> n >> m;
     for (int i = 1; i <= m; ++i) {
         int u,v;
