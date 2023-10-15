@@ -144,3 +144,11 @@ void trackShortestPaths(int start) {
     }
     sort(shortestPathList[start].begin(), shortestPathList[start].end());
 }
+// a tablarol irtam le
+
+// for(int j = 0;j < szl[bfs(i)].size; j++{
+//      szl[bfs(i)[j]
+
+// for(int i = 1;i < n;i++){
+//      bfs(i);
+
